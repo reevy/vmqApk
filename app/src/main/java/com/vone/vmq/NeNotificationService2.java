@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -171,14 +173,24 @@ public class NeNotificationService2 extends NotificationListenerService {
                                     money = getMoney(content);
                                 }
                             } else {
-                                money = getMoney(content);
+                                money = getMoney2(title);
+                                if (money == null) {  // 继续使用匹配 xxx元的方式
+                                    money = getMoney2(content);
+                                }
+                                if (money == null) {  // 使用数字匹配的方式
+                                    money = getMoney(content);
+                                }
                                 if (money == null) {
                                     money = getMoney(title);
                                 }
                             }
                             if (money != null) {
                                 Log.d(TAG, "onAccessibilityEvent: 匹配成功： 支付宝 到账 " + money);
-                                appPush(2, Double.parseDouble(money));
+                                try{
+                                    appPush(2, Double.parseDouble(money));
+                                } catch (Exception e) {
+                                    Log.d(TAG, "app push 错误！！！");
+                                }
                             } else {
                                 handler.post(new Runnable() {
                                     public void run() {
@@ -393,6 +405,21 @@ public class NeNotificationService2 extends NotificationListenerService {
         Intent intent1 = new Intent();
         intent1.setAction(Constant.FINISH_FOREGROUND_SERVICE);
         context.sendBroadcast(intent1);
+    }
+
+    /**
+     * 匹配支付宝的收款 元
+     * 为了兼容旧版，新版增加这个匹配
+     */
+    public static String getMoney2(String content) {
+        Pattern compile = Pattern.compile("(\\d+\\.\\d+)元|(\\d+)元");
+        Matcher matcher = compile.matcher(content);
+        if (matcher.find()) {
+            String price = matcher.group();
+            return price.substring(0, price.lastIndexOf("元"));
+        } else {
+            return null;
+        }
     }
 
     public static String getMoney(String content) {
