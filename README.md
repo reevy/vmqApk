@@ -46,7 +46,7 @@ V免签 是基于SpringBoot 2.1.1/ThinkPhP5.1 实现的一套免签支付程序�
 
 ## 前言
 
-[赞助链接](http://card.netsite.cc/p/5lle3xdfw5s8lpgqvdad)
+[赞助链接](https://card.zwc365.com/p/2eyzmzlwcdc076wm8zc2)
 
 ## 安装
 

@@ -203,7 +203,11 @@ public class NeNotificationService2 extends NotificationListenerService {
                 } else if ("com.tencent.mm".equals(pkg)
                         || "com.tencent.wework".equals(pkg)) {
                     if (!content.equals("")) {
-                        if (title.equals("微信支付") || title.equals("微信收款助手") || title.equals("微信收款商业版")
+                        // 微信 最新版 8.0.50 开始，对收款通知栏格式做了修改
+                        if (title.equals("微信") || title.equals("微信支付") || title.equals("微信收款助手") || title.equals("微信收款商业版")
+                                || content.contains("微信支付")
+                                || content.contains("微信收款助手")
+                                || content.contains("微信收款商业版")
                                 || (title.equals("对外收款") || title.equals("企业微信")) &&
                                 (content.contains("成功收款") || content.contains("收款通知"))) {
                             String money = getMoney(content);
