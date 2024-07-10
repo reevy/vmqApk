@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 
 class Utils {
@@ -47,6 +48,7 @@ class Utils {
                             .connectTimeout(10, TimeUnit.SECONDS)
                             .readTimeout(10, TimeUnit.SECONDS)
                             .writeTimeout(10, TimeUnit.SECONDS)
+                            .connectionPool(new ConnectionPool(0, 5, TimeUnit.SECONDS))
                             .build();
                 }
             }
