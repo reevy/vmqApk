@@ -2,6 +2,21 @@
 V免签  —— 个人开发者收款解决方案
 ===============
 
+## Android 15 新限制
+
+请注意，Android 15 新系统，对app权限进一步限制，需要打开usb调试模式，使用adb执行shell命令：
+
+```
+appops set com.vone.qrcode RECEIVE_SENSITIVE_NOTIFICATIONS allow
+```
+
+手动授予 `RECEIVE_SENSITIVE_NOTIFICATIONS`  权限，才能正常监听某些 支付宝 消息，否则会导致漏单等情况。这是Android15 新加入的限制，目前没有其他办法绕过
+
+> 部分消息会被系统拦截，部分消息能够正常监听，这是新系统的默认行为，并非软件无法监听。手动授予权限后，才能监听到完整的通知消息
+> Android 14 以及低版本没有这个限制
+
+## 简介
+
 此处为fork自原作者的修改版
 主要修改增加几项功能：
 
