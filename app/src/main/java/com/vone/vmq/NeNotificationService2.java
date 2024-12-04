@@ -210,7 +210,13 @@ public class NeNotificationService2 extends NotificationListenerService {
                                 || content.contains("微信收款商业版")
                                 || (title.equals("对外收款") || title.equals("企业微信")) &&
                                 (content.contains("成功收款") || content.contains("收款通知"))) {
-                            String money = getMoney(content);
+                            String money = getMoney2(content);
+                            if (money == null) {  // 继续使用匹配 xxx元的方式
+                                money = getMoney2(title);
+                            }
+                            if (money == null) {  // 使用旧版的匹配方式，可能识别错误，不够精准
+                                money = getMoney(content);
+                            }
                             if (money != null) {
                                 Log.d(TAG, "onAccessibilityEvent: 匹配成功： 微信到账 " + money);
                                 try {
